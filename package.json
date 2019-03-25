@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node scripts/seedDB.js",
+    "clean": "node scripts/cleanDB.js",
+    "crunchy": "node scripts/crunchy.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/dph0718/meetPi/issues"
   },
-  "homepage": "https://github.com/dph0718/meetPi#readme"
+  "homepage": "https://github.com/dph0718/meetPi#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.4.19"
+  }
 }
