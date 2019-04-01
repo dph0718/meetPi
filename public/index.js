@@ -22,9 +22,14 @@ function grabUserData(data) {
     });
 };
 
+// Sends request to create Event in db.
 function createEvent(data){
-    $.post('/createEvent')
-}
+    $.post('/createEvent', data, function(result){
+        console.log(`successfully created event.`);
+        console.log(result);
+                
+    })
+};
 
 // Gets data for the Event from the db.
 function getEventDataSingle(data) {
@@ -52,7 +57,6 @@ $("#userForm").submit(function (event) {
     createUserRequest(user);
 });
 
-
 // Grabs User's Id, passes it into the db request, & returns other user data
 $("#getUser").click(function (event) {
     event.preventDefault();
@@ -70,4 +74,19 @@ $("#getEvent").click(function (event) {
         _id: eventId,
     };
     getEventDataSingle(eventData);
+});
+
+// Grabs Event form data && calls the create Event request
+$("#createEvent").click(function(event){
+    event.preventDefault();
+    console.log(`Click. First step.`);
+    
+    let name = $("#eventName").val();
+    let eventObject = {eventName: name }
+    console.log(`creating an efvent for:::`);
+    
+    console.log(eventObject);
+    
+    createEvent(eventObject);
+
 });

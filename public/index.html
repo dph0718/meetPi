@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+   <link rel="stylesheet" href="/main.css">
     <title>Input</title>
 </head>
 
@@ -13,21 +16,21 @@
     <h1>Get it to work.</h1>
     <form id="userForm" action="/login">
         Your email: <input name="email" id="email" type="email" value="dummy@email.nut"><br>
-        Password <input id="password" name="password" type="text" value="passsword">  <br>
-        Verify password <input name="password2" type="text" value="password">  <br>
-        First Name: <input id="firstName" name="firstName" type="text" value="Pamdrew">  <br>
-        Default address: <input id="defaultAddress" name="address" type="text" value="37 Goodplace">   <br>
+        Password <input id="password" name="password" type="text" value="passsword"> <br>
+        Verify password <input name="password2" type="text" value="password"> <br>
+        First Name: <input id="firstName" name="firstName" type="text" value="Pamdrew"> <br>
+        Default address: <input id="defaultAddress" name="address" type="text" value="37 Goodplace"> <br>
         <input id="submission" type="submit" value="submit">
     </form>
     <button id="getUser">Get User</button> <br>
     <button id="getEvent">Get Event</button>
     <form>
-        <input type="text">
-        <input type="text">
-        <input type="text">
-        <input type="text">
-    </form>
+        <input name="eventName" id="eventName" type="text" value="Tomato Suing"> Event Name<br>
+        <input name="invitees" id="invitees" type="text">Invitees<br>
+        <input name="" id="" type="text"><br>
 
+        <button id="createEvent">Create Event</button>
+    </form>
     <script src="/index.js"></script>
 </body>
 
