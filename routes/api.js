@@ -15,15 +15,10 @@ const eventCont = require("../controllers/eventController")
 router.post('/createUser', userCont.addUser);
 router.post("/userDashboard", userCont.getUser);
 router.delete('/removeEvent', eventCont.removeEvent);
-
 router.post("/createEvent", eventCont.createEvent);
 router.post("/eventDetail", eventCont.getEvent);
-
-
-
 router.get("/vote/:eventId", (req, res) => {
     console.log(`I voted.`);
-
     console.log(req.params.eventId);
     res.json('Fabulous.')
     // find the Event
@@ -31,14 +26,10 @@ router.get("/vote/:eventId", (req, res) => {
     // Add the vote to the Potential object
     // Disable user from voting again.
 });
-
-
 // Catch all Route
 router.get("/*", (req, res) => {
     res.send("You have made a very success.")
 });
-
-
 // Order of things to make this work:
 // Event List page 
 // Retrieve from the User, all User's event, 
@@ -66,13 +57,11 @@ router.get("/*", (req, res) => {
 
 // Store the user's vote in the Event's {potentials: []}  of the Event
 
-
 //Event Detail page [Map & VotePies]
 // 
 // Retrieve, from the Event, all invitees'/attendees' geolocations from database.
 // Calculate average latitude/longitude
 // Store the center lat/long in Event
-
 
 // A route that 
 // A route that hits the google maps API --> sends data
