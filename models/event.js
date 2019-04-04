@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+
 const EventSchema = new Schema({
+    eventId: String,
     eventName: String,
     eventAddress: String,
     eventZip: Number,
@@ -9,8 +11,12 @@ const EventSchema = new Schema({
         latitude: Number, 
         longitude: Number
     },
+
+    // array of Users' Id's
     attendees: Array,
-    possibilities: Array
+    possibilities: Array,
+    
+    
 });
 
 const Event = mongoose.model("Event", EventSchema);
