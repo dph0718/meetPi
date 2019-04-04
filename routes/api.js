@@ -1,7 +1,7 @@
 // router defines GET, POST, etc. routes.
 const router = require("express").Router();
-const userCont = require("../controllers/userController");
-const eventCont = require("../controllers/eventController")
+const userController = require("../controllers/userController");
+const eventController = require("../controllers/eventController")
 // router.get(a, b) handles the GET requests (like app.get(), but more localized to this file)
 // a is a String representing the url path requested. assuming your domain is domain.com, 
 // the route below will handle requests to "www.domain.com/login"
@@ -12,11 +12,20 @@ const eventCont = require("../controllers/eventController")
 // That callback function'll then use the "res" object to call a method that takes a response action.
 //  
 // Although it's "POST", it gets user data.
-router.post('/createUser', userCont.addUser);
-router.post("/userDashboard", userCont.getUser);
-router.delete('/removeEvent', eventCont.removeEvent);
-router.post("/createEvent", eventCont.createEvent);
-router.post("/eventDetail", eventCont.getEvent);
+
+// Creates user upon signup
+router.post('/createUser', userController.addUser);
+// Retrieves user's data
+router.post("/userDashboard", userController.getUser);
+// Deletes an Event
+router.delete('/removeEvent', eventController.removeEvent);
+// Creates an Event
+router.post("/createEvent", eventController.createEvent);
+// Retrieves Event data
+router.post("/eventDetail", eventController.getEvent);
+
+
+
 router.get("/vote/:eventId", (req, res) => {
     console.log(`I voted.`);
     console.log(req.params.eventId);
@@ -26,6 +35,8 @@ router.get("/vote/:eventId", (req, res) => {
     // Add the vote to the Potential object
     // Disable user from voting again.
 });
+
+
 // Catch all Route
 router.get("/*", (req, res) => {
     res.send("You have made a very success.")
