@@ -41,7 +41,4 @@ module.exports = {
                 res.status(202).json(returnedUser);
             });
     },
-
-
-
 };

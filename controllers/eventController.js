@@ -33,7 +33,7 @@ module.exports = {
             .findOneAndRemove({ _id: req.body._id })
             .then(() => {
                 res.send("Delete was a success.")
-            })
+            });
     },
 
 
