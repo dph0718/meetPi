@@ -1,3 +1,18 @@
+
+//  The getAllPlaces function returns a Promise
+//  that resolves with an array (of the arrays) of all Places objects found,
+//  collected from its Promise.all() function,
+// which is a series of promises that each resolve with results of a specific Place "type" search
+// each of which is defined by the values in the validPlaceTypes array.
+
+// PARAMETERS:
+// lat: latitude of midpoint
+// lng: longitude of midpoint
+// radius: the radius, in meters, of the area around the midpoint to search
+
+
+
+
 // Allows getting sensitive info from .env file.
 require("dotenv").config();
 const promiseArray = require("./nearbyLooper");

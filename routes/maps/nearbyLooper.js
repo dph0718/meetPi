@@ -1,3 +1,9 @@
+// The loopThruTypes function returns an array of Promises:
+// each Promise resolves with Places data for a given 'type' of establishment (defined by, & imported from ./getNearbyPlacesPromise).
+// The array of Promises is then passed into a Promise.all() function (within ./api-nearbyPlaces) to return all results synchronously.
+
+
+
 require("dotenv").config();
 const placesPromise = require("./getNearbyPlacesPromise");
 

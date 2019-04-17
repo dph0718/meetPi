@@ -1,24 +1,33 @@
 
-require("dotenv").config();
-let APIKey = process.env.GOOGLE_API_KEY;
+// The getNearbyPlaces function returns a Promise
+// that resolves with the Places data 
+// based on the 'type' of establishment searched for
+
+// PARAMETERS:
+// lat: latitude of midpoint
+// lng: longitude of midpoint
+// radius: the radius, in meters, of the area around the midpoint to search
+// type: the type of place being queried ("bar", "restaurant", etc...)
+
+
+let key = require("../../keys.js").google;
 const googleMapsClient = require('@google/maps').createClient({
-    key: APIKey
+    key: key
 });
 
 
 // This Promise returns the results of the nearbyPlaces API request. Parameters:
-// lat: latitude
-// lng: longitude
-// radius: the radius, in meters, of the search area from the given lat/lng
-// type: the type of place being queried ("bar", "restaurant", etc...)
 
 const getNearbyPlaces = function (lat, lng, radius, type) {
+    console.log("PLACES KEY:");
+    
 
+    console.log(key);
+    
     lat = parseFloat(lat);
     long = parseFloat(lng);
 
     return new Promise(function (resolve, reject) {
-        console.log(`in Promise Before API call:`);
         googleMapsClient.placesNearby({
             location: { lat: lat, lng: lng },
             radius: radius,
@@ -28,6 +37,7 @@ const getNearbyPlaces = function (lat, lng, radius, type) {
             function (err, response) {
                 if (err) {
                     console.log(err);
+                    reject("NearbyPlaces Request Error");
                 }            
                 console.log(`Resolved the ${type} search with ${response.json.results.length} results returned`);
                 resolve(response.json.results);
