@@ -8,13 +8,15 @@ const UserSchema = new Schema({
     email: String,
     firstName: String,
 
-    defaultLocation: [{
+    // User's assumed location without location enabled.
+    defaultLocation: {
         address: String,
         zip: Number,
         latitude: Number,
         longitude: Number
-    }],
+    },
 
+    // User's current location IF location enabled
     currentLocation: {
         address: String,
         zip: Number,
