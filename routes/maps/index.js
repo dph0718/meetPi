@@ -6,13 +6,18 @@ const nearbyPlacesRoutes = require("./api-nearbyPlaces")
 router.get("/geocode", (req, res) => {
 
     console.log(req.body);
-
-    geocodeRoutes("1600 Pennsylvania Ave")
+    console.log(`Just the address:`);
+    
+    console.log(req.body.address);
+    const address = req.body.address;
+    
+    // geocodeRoutes("1600 Pennsylvania Ave")
+    geocodeRoutes(address)
         .then(data => {
             let coords = {
                 lng: data.longitude,
                 lat: data.latitude,
-                name: "White House"
+                name: "White Horse"
             };
 
             console.log(`Geocode request Succeeded!`);
