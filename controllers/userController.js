@@ -5,21 +5,13 @@ module.exports = {
     // Adds user
     addUser: (req, res) => {
         db.User.create(req.body);
-        res.status(201).send("User created.");
-    },
-
-
-    // Creates Event, Responds with confirmation string.
-    addEvent: (req, res) => {
-        db.Event.create(req.body);
-        console.log("Event created.")
-        res.status(201).send("Event created.");
+        res.status(200).send("User created.");
     },
 
     // Returns selected User's data
     getUser: (req, res) => {
-    // req.body will have "user" property upon sign In.
-    // It won't when creating an Event and searching Users in db; will be in the URI of the request
+        // req.body will have "user" property upon sign In.
+        // It won't when creating an Event and searching Users in db; will be in the URI of the request
         let userId;
         if (req.body.hasOwnProperty("user")) {
             userId = req.body.user._id
@@ -40,17 +32,27 @@ module.exports = {
                 };
 
                 let returnedUser = {
+                    id: user._id,
                     firstName: user.firstName,
                     userName: user.userName,
                     defaultLocation: {
-                        address: user.defaultLocation[0].address,
-                        latitude: user.defaultLocation[0].latitude,
-                        longitude: user.defaultLocation[0].longitude,
-                        zip: user.defaultLocation[0].zip
+                        address: user.defaultLocation.address,
+                        latitude: user.defaultLocation.latitude,
+                        longitude: user.defaultLocation.longitude,
+                        zip: user.defaultLocation.zip
                     }
                 };
 
-                res.status(202).json(returnedUser);
+                res.status(200).json(returnedUser);
             });
     },
+
+    updateUserEvents: (req, res) => {
+        let userId = req.body.userId;
+        let eventId = req.body.eventId
+        db.User.updateOne({ _id: userId }, { $push: { events: eventId } })
+            .then(x => {
+                console.log(`User ${userId} successfully added Event ${eventId}!`);
+            });
+    }
 };
