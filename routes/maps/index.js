@@ -5,12 +5,10 @@ const nearbyPlacesRoutes = require("./api-nearbyPlaces")
 
 router.get("/geocode", (req, res) => {
 
-    console.log(req.body);
     console.log(`Just the address:`);
-    
     console.log(req.body.address);
     const address = req.body.address;
-    
+
     // geocodeRoutes("1600 Pennsylvania Ave")
     geocodeRoutes(address)
         .then(data => {
@@ -29,16 +27,24 @@ router.get("/geocode", (req, res) => {
 
 })
 
-router.get("/nearby", (req, res) => {
-    console.log(`nearbyPlaces request sent, awaiting Promise....`);
-    console.log(req.body);
+// router.get("/nearby", (req, res) => {
+router.get("/nearby/:lat/:lng/:radius", (req, res) => {
     
-    nearbyPlacesRoutes(38.8791765, -76.98181269999999, 1000)
+    let lat = parseFloat(req.params.lat);
+    let lng = parseFloat(req.params.lng);
+    let rad = parseFloat(req.params.radius);
+
+
+    console.log(`nearbyPlaces request sent, awaiting Promise....`);
+
+    nearbyPlacesRoutes(lat, lng, rad)
         .then(data => {
             console.log(`nearbyPlaces request succeeded!`);
-            
             res.send(data)
         })
+        .catch(err=>{
+            console.log(err);
+        });
 });
 
 // router.use("/geocode", geocodeRoutes);
