@@ -19,11 +19,7 @@ const googleMapsClient = require('@google/maps').createClient({
 // This Promise returns the results of the nearbyPlaces API request. Parameters:
 
 const getNearbyPlaces = function (lat, lng, radius, type) {
-    console.log("PLACES KEY:");
-    
 
-    console.log(key);
-    
     lat = parseFloat(lat);
     long = parseFloat(lng);
 
@@ -38,9 +34,24 @@ const getNearbyPlaces = function (lat, lng, radius, type) {
                 if (err) {
                     console.log(err);
                     reject("NearbyPlaces Request Error");
-                }            
+                }
                 console.log(`Resolved the ${type} search with ${response.json.results.length} results returned`);
-                resolve(response.json.results);
+                console.log(`//////////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\//`);
+                
+                let exists = (response.json.results.length > 0);
+
+                const nearbyObject = {
+                    type: type,
+                    exists: exists,
+                    places: response.json.results
+                };
+                console.log(`It is ${exists} that ${type}s are present.`);
+
+
+
+
+                // resolve(response.json.results);
+                resolve(nearbyObject);
             });
     });
 };
