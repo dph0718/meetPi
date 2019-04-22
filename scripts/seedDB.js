@@ -16,19 +16,19 @@ const userSeed = [
         email: `dummy01@email.com`,
         firstName: `Dummy`,
 
-        defaultLocation: [{
+        defaultLocation: {
             address: `1905 S Federal Blvd`,
             zip: 80219,
-            latitude: null,
-            longitude: null,
-        }],
+            latitude: 39.6820518,
+            longitude: -105.0253781,
+        },
 
-        currentLocation: [{
+        currentLocation: {
             address: null,
             zip: null,
             latitude: null,
             longitude: null
-        }],
+        },
         events: [],
     },
     {
@@ -37,19 +37,20 @@ const userSeed = [
         email: `dummy02@email.com`,
         firstName: `Rummy`,
 
-        defaultLocation: [{
+        defaultLocation: {
             address: `2645 S Santa Fe Dr Ste D & E`,
             zip: 80223,
-            latitude: null,
-            longitude: null,
-        }],
+            latitude: 39.6683721,
+            longitude:  -104.9964899,
+            
+        },
 
-        currentLocation: [{
+        currentLocation: {
             address: null,
             zip: null,
             latitude: null,
             longitude: null
-        }],
+        },
         events: [],
     },
     {
@@ -58,23 +59,23 @@ const userSeed = [
         email: `dummy03@email.com`,
         firstName: `Tummy`,
 
-        defaultLocation: [{
+        defaultLocation: {
             address: `3300 W 32nd Ave,`,
             zip: 80211,
-            latitude: null,
-            longitude: null,
-        }],
+            latitude: 39.7619629,
+            longitude: -105.0302269,
+        },
 
-        currentLocation: [{
+        currentLocation: {
             address: null,
             zip: null,
             latitude: null,
             longitude: null
-        }],
+        },
         events: [],
     },
 
-]
+];
 
 const eventSeed = [
     {
@@ -111,7 +112,7 @@ const eventSeed = [
         possibilities: Array
     },
 
-]
+];
 
 // Clearing the db, inserting the User and Event seeds.
 db.User
