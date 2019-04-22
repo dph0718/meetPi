@@ -76,22 +76,20 @@ const getAllPlacesFunction = function (lat, lng, radius) {
     // let nearbyPlacesPromiseA = Promise.all(promiseArray(validPlaceTypes, 39.6820518, -105.0253781, 2000))
     return new Promise(function (resolve, reject) {
         let nearbyPlacesPromiseA = Promise.all(promiseArray(validPlaceTypes, lat, lng, radius))
-            .then((values) => {
-                valuesArray = [];
-                // the 'values' are each an array of the places searched for by "type"
-                // I don't think we want all the data returned - 
-                values.forEach(function (resolution, iR) {
-                    resolutionArray = []
-                    // The 'resolution' is the array of places.
-                    resolution.forEach((place, iP) => {
-                        let newPlace = new Place(place);
-                        resolutionArray.push(newPlace)
-                        // console.log(newPlace);
-                        // console.log(`===================================================================================================================`);
-                    });
-                    valuesArray.push(resolutionArray)
-                });
-                resolve(valuesArray);
+            .then((typesResults) => {
+
+                let typesResultsArray = typesResults.map(typeRes => {
+                    return {
+                        type: typeRes.type,
+                        exists: typeRes.exists,
+                        places: typeRes.places.map(place => new Place(place))
+                    }
+                })
+
+                resolve(typesResultsArray);
+            })
+            .catch(err => {
+                console.log(err);
             });
     });
 };
