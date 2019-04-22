@@ -3,13 +3,17 @@ const db = require("../models");
 module.exports = {
 
     // Creates event
-    createEvent: (req, res) => {
+    createEvent: (req, cb) => {
         const event = {};
         for (prop in req.body) {
             event[prop] = req.body[prop];
         };
-        db.Event.create(event);
-        res.send(`Event created: ${req.body.eventName}`);
+        db.Event.create(event)
+            .then(newEvent => {
+                console.log(`Event created: ${req.body.eventName}`);
+                cb(newEvent)
+            });
+
     },
 
     // Retrieves the event by Id
