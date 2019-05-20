@@ -1,18 +1,14 @@
 // Routes for accessing Event data are defined here: paths from <hostroot>/event/<routeBelow>
 // Controller methods are found in /controllers/eventController
 
-
-
-
-
-
 const router = require("express").Router();
 const fetchInvitees = require("./fetchInvitees")
 const eventControl = require("../../controllers/eventController");
 const userControl = require("../../controllers/userController");
-const axios = require("axios");
+const mapsApi = require("../../api/maps")
 
 
+// Creates the Event from req.body info
 router.post('/create', (req, res) => {
 
     // let invitees = req.body.invitees;
@@ -21,13 +17,13 @@ router.post('/create', (req, res) => {
     let eventTitle = req.body.eventName ? req.body.eventName : "Unnamed Event";
 
     // Hardcoded Dummy data from DB:
-    let invitees = [
+    let invitees_O = [
         { userId: "5cbbeeda6e09e51f24a44704" },
         { userId: "5cbbeeda6e09e51f24a44705" },
         { userId: "5cbbeeda6e09e51f24a44706" },
     ];
-
-
+    req.body.invitees = invitees_O;
+    let invitees = req.body.invitees;
 
     // Find invitees' data in User db
     fetchInvitees(invitees, (usersInvited) => {
@@ -48,7 +44,7 @@ router.post('/create', (req, res) => {
         });
 
         // Then average the sum of coordinates
-        let avgCoords = { lat: sumCoords.lat / numInvitees, lng: sumCoords.lng / numInvitees }
+        let avgCoords = { lat: sumCoords.lat / numInvitees, lng: sumCoords.lng / numInvitees };
 
         // Make final Event object to be created in DB.
         const newEvent = {
@@ -67,43 +63,58 @@ router.post('/create', (req, res) => {
         };
 
         // Insert Event in DB.
-        eventControl.createEvent(newEvent, (event)=>{
-            invitees.forEach(inviT=>{
+        eventControl.createEvent(newEvent, (event) => {
+            // Then, for each invitee, add the event to their "events" field
+            invitees.forEach(inviT => {
                 let addEvent = {
                     body: {
                         userId: inviT.userId,
                         eventId: event._id
                     }
                 }
-
                 userControl.updateUserEvents(addEvent)
             })
         })
+
         // Make the nearbyPlaces request
-        axios.get(`http://localhost:3001/maps/nearby/${avgCoords.lat}/${avgCoords.lng}/${radius}`)
-            .then(result => {
-                const eventReturn = {
-                    coordinates: avgCoords,
-                    places: result.data
-                }
-                res.status(200).send(eventReturn);
+        let lat = newEvent.body.eventCenter.latitude;
+        let lng = newEvent.body.eventCenter.longitude;
+
+        mapsApi.getNearbyPlaces(lat, lng, radius)
+            .then(resolved => {
+                console.log(`This is the resolution of the getNearbyPlaces within mapsApi`);
+                console.log(resolved);
             })
-            .catch(err => {
-                console.log(`Error within axios nearby request`)
-                console.log(err);
-            });
+            // Send all the necessary data:
+            // average coordinates (to map center)
+            // places (to populate menu and generate a meetspot)
+            .then(res.send("Seems as though you've created an Event."))
 
-
-        // Send all the necessary data:
-        // average coordinates (to map center)
-        // places (to populate menu and generate a meetspot)
 
 
     });
 
 
-})
+});
 
 
+// Updates the Event in the req.body with the chosen address.
+router.post("/update", (req, res) => {
+    // The request contains the updated location of Event, chosen by creator
+    // We'll need to grab the event's id
+    /*      -On the front end, send the entire event object in the request
+    */
+    const event = req.body.event;
+    console.log(`The request.body:`);
+    console.log(req.body);
+
+    // Add the Event location to the Event's db entry
+    eventControl.updateEvent(event, (value) => {
+        res.status(200).send("I reckon you've updated the event, pardner.")
+    })
+
+
+
+});
 
 module.exports = router;
