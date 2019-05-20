@@ -6,7 +6,6 @@ const makeAxios = require("./axiosPromise")
 
 
 const fetchInvitees = (invitees, cb) => {
-
     const port = process.env.PORT || "localhost:3001";
 
     axios.all(invitees.map(i => axios.get(`http://${port}/user/${i.userId}`)))
@@ -14,9 +13,7 @@ const fetchInvitees = (invitees, cb) => {
 
             let inviteesArray = [];
             res.forEach(element => {
-                console.log(element.data);
                 inviteesArray.push(element.data)
-
             });
             cb(inviteesArray)
         }))

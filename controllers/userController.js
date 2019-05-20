@@ -2,10 +2,11 @@ const db = require("../models");
 
 module.exports = {
 
-    // Adds user
+    // Creating User
     addUser: (req, res) => {
+
         db.User.create(req.body);
-        res.status(200).send("User created.");
+        res.status(200).send(`User ${req.body.firstName} created.`);
     },
 
     // Returns selected User's data

@@ -40,5 +40,15 @@ module.exports = {
             });
     },
 
+    updateEvent: (event, cb) => {
+        const id = event.id;
+        const location =event.location;
+        db.Event
+            .findOneAndUpdate({ _id: id }, { eventAddress: location })
+            .then((x) => {
+                console.log(`Address successfully added: ${location}`);
+                cb(x)
+            })
+    }
 
 };
