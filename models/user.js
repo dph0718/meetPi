@@ -7,7 +7,8 @@ const UserSchema = new Schema({
     password: String,
     email: String,
     firstName: String,
-
+    lastName: String,
+    
     // User's assumed location without location enabled.
     defaultLocation: {
         address: String,
